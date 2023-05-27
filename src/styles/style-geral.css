@@ -1,0 +1,31 @@
+:root {
+    --color-background:#F3F3F3;
+    --color-background-nav:#0a498d;
+    --color-background-home:#f0f0f0;
+    --color-text-light:#EDEDED;
+    --color-text-title:#95f5fc;
+    --color-text-dark:#272088;
+    --color-link-hover:rgb(13, 0, 129);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+html,
+body {
+    background-color: var(--color-background);
+}
+
+a {
+    text-decoration: none;
+    transition: 0.2s opacity;
+}
+
+a:hover {
+    opacity: 0.9;
+    color: var(--color-link-hover);
+}
