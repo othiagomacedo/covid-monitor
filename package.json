@@ -9,14 +9,19 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "bootstrap": "^5.2.3",
+    "bootstrap-datepicker": "^1.10.0",
+    "bootstrap-icons": "^1.10.5",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "axios": "^1.4.0",
     "eslint": "^8.39.0",
     "eslint-plugin-vue": "^9.11.0",
+    "sass": "^1.62.1",
     "vite": "^4.3.5"
   }
 }

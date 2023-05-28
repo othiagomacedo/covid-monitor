@@ -1,6 +1,7 @@
 :root {
-    --color-background:#F3F3F3;
+    --color-background:#F4F4F4;
     --color-background-nav:#0a498d;
+    --color-background-nav-hover:#7db7f550;
     --color-background-home:#f0f0f0;
     --color-text-light:#EDEDED;
     --color-text-title:#95f5fc;

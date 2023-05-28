@@ -1,32 +1,35 @@
 <template>
-    <div>
-      <h1>{{ message }}</h1>
-      <button @click="changeMessage">clique aqui</button>
-    </div>
-  </template>
+  <div>
+    <HeadPage></HeadPage>
+    <BodyPage></BodyPage>
+    <ModelAlerta></ModelAlerta>
+    <FooterPage></FooterPage>
+  </div>
+</template>
   
-  <script>
-  import './styles/style-geral.css'
-  export default {
-    data() {
-      return {
-        message: "se clicar é guei"
-      };
-    },
-    methods: {
-      changeMessage() {
-        this.message = "ih, seu baitola!";
-      }
-    }
-  };
-  </script>
-  
-  <style>
-  h1 {
-    color: var(--color-text-dark);
+<script>
+import './scss/style-geral.css'
+import ModelAlerta from './components/modal/ModalAlerta.vue'
+import HeadPage from './components/head/head-page.vue'
+import FooterPage from './components/footer/footer-page.vue'
+import BodyPage from './components/body/body-page.vue'
+export default {
+  components: {
+    HeadPage,
+    BodyPage,
+    ModelAlerta,
+    FooterPage
   }
-  button {
-    margin-top: 50px;
-  }
-  </style>
-  
+};
+</script>
+
+<style>
+h1 {
+  color: var(--color-text-dark);
+}
+
+button {
+  padding: 8px;
+  margin-top: 50px;
+}
+</style>
