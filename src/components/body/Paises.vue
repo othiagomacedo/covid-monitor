@@ -1,30 +1,19 @@
 <template>
     <div class="paises-body">
         <h2>Países</h2>
-        <PesquisaPais></PesquisaPais>
         <div class="row">
-            <div class="col">
-                <CardPaisSemPesquisa class = "card-pais"></CardPaisSemPesquisa>
-            </div>
-            <div class="col">
-                <CardTablePaises></CardTablePaises>
-            </div>
+            <BodyPais class = "card-pais"></BodyPais>
         </div>
     </div>
 </template>
 
 <script>
-import PesquisaPais from '../pais/PesquisaPais.vue'
-import CardPaisSemPesquisa from '../pais/CardPaisSemPesquisa.vue'
-import CardTablePaises from '../pais/CardTablePaises.vue'
-import api from '../../api/request/requests'
+import BodyPais from '../pais/BodyPais.vue'
 
 export default {
 
     components : {
-        PesquisaPais,
-        CardPaisSemPesquisa,
-        CardTablePaises
+        BodyPais
     }    
 }
 </script>

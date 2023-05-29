@@ -12,6 +12,18 @@
                 <CardPais></CardPais>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col">
+                <ResultadosBench></ResultadosBench>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <HistoricoBench></HistoricoBench>
+            </div>
+        </div>
         
     </div>
 </template>
@@ -19,11 +31,15 @@
 <script>
 import CardPais from '../pais/CardPais.vue'
 import PesquisaBench from '../bench/PesquisaBench.vue';
+import ResultadosBench from '../bench/ResultadosBench.vue';
+import HistoricoBench from '../bench/HistoricoBenchmark.vue';
 
 export default {
     components : {
         PesquisaBench,
-        CardPais
+        CardPais,
+        ResultadosBench,
+        HistoricoBench
     }    
 }
 </script>

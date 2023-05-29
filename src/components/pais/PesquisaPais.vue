@@ -1,7 +1,8 @@
 <template>
     <div class="row">
         <div class="col">
-            <input type="text" class="form-control" placeholder="Sigla do País" aria-label="sigla" v-model="siglaPais">
+            <input type="text" class="form-control" placeholder="Sigla do País" aria-label="sigla" v-model="siglaPais"
+                @input="handleInputSigla1" maxlength="3">
         </div>
         <div class="col">
             <input type="text" class="form-control" placeholder="Nome do País" aria-label="nome" v-model="nomePais">
@@ -10,13 +11,11 @@
     <div class="row">
         <div class="col">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Data Inicial" data-provide="datepicker"
-                    data-date-format="dd-mm-yyyy">
-                <input type="text" class="form-control" placeholder="Data Final" data-provide="datepicker"
-                    data-date-format="dd-mm-yyyy">
-                <div class="input-group-addon">
-                    <span class="glyphicon glyphicon-th"></span>
-                </div>
+                <Datepicker v-model="dataInicial" class="form-control" placeholder="Data Inicial" format="dd-MM-yyyy"
+                    @input="updateDataInicial" :format="format"></Datepicker>
+
+                <Datepicker v-model="dataFinal" class="form-control" placeholder="Data Final" format="dd-MM-yyyy"
+                    @input="updateDataFinal" :format="format"></Datepicker>
             </div>
         </div>
         <div class="col">
@@ -29,43 +28,70 @@
                 Buscar Dados do País
             </a>
         </div>
-        
+
     </div>
-    <p class="rodape-msg">Preencha Sigla e Datas, pois são obrigatórios</p>
+    <p class="rodape-msg">Preencha Sigla e Datas, pois são obrigatórios para a busca</p>
 </template>
 
 <script>
 
+import api from '../../api/request/requests';
+import { ref } from 'vue';
+import Datepicker from 'vue3-datepicker';
+import { createRouter, createWebHistory } from 'vue-router';
+
 export default {
+    components: {
+        Datepicker
+    },
+
+    data() {
+        return {
+            siglaPais: '',
+            nomePais: '',
+            dataInicial: '',
+            dataFinal: '',
+            format: 'dd-MM-yyyy',
+        }
+    },
+
+    setup() {
+        const dataInicial = ref(new Date('2022-01-02'));
+        const dataFinal = ref(new Date('2023-01-01'));
+        return {
+            dataInicial,
+            dataFinal,
+        };
+    },
+
 
     methods: {
+        handleInputSigla1() {
+            this.siglaPais = this.siglaPais.replace(/[^A-Za-z]/g, '').toUpperCase();
+        },
         buscarPais() {
-            const siglaPais = this.siglaPais; // obter valor do campo de entrada de sigla do país
-            const nomePais = this.nomePais; // obter valor do campo de entrada de nome do país
-            console.log("fui clicado - "+siglaPais+" - "+nomePais);
-            if (siglaPais) {
-                // Chamar o método para obter país por sigla
-                requests.obterPaisBySigla(siglaPais)
-                    .then(response => {
-                        console.log(response.data);
-                        // Faça o que for necessário com a resposta (por exemplo, atribuir a uma variável de dados do componente)
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            } else if (nomePais) {
-                // Chamar o método para obter país por nome
-                requests.obterPaisByNome(nomePais)
-                    .then(response => {
-                        console.log(response.data);
-                        // Faça o que for necessário com a resposta (por exemplo, atribuir a uma variável de dados do componente)
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            } else {
-                console.log("Preencha os campos de entrada");
-            }
+            console.log('Buscar Historico País');
+            console.log(this.siglaPais);
+            console.log(this.nomePais);
+            let dataIniDia = this.dataInicial.getDate().toString().length < 2 ? '0' + this.dataInicial.getDate() : this.dataInicial.getDate();
+            let dataIniMes = (this.dataInicial.getMonth() + 1).toString().length < 2 ? '0' + (this.dataInicial.getMonth() + 1) : (this.dataInicial.getMonth() + 1);
+            let dataFimDia = this.dataFinal.getDate().toString().length < 2 ? '0' + this.dataFinal.getDate() : this.dataFinal.getDate();
+            let dataFimMes = (this.dataFinal.getMonth() + 1).toString().length < 2 ? '0' + (this.dataFinal.getMonth() + 1) : (this.dataFinal.getMonth() + 1);
+            let dataIni = this.dataInicial.getFullYear() + '-' + dataIniMes + '-' + dataIniDia;
+            let dataFim = this.dataFinal.getFullYear() + '-' + dataFimMes + '-' + dataFimDia;
+            console.log(dataIni);
+            console.log(dataFim);
+            console.log('requisição a api montada: /dados/totais/' + this.siglaPais + '/' + dataIni + '&' + dataFim);
+            api.get('/dados/totais/' + this.siglaPais + '/' + dataIni + '&' + dataFim)
+                .then(response => {
+                    console.log(response.data);
+                    this.$router.push({ name: 'BodyPais', params: { dados: response.data } });
+                    console.log('redirecionando para BodyPais');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
         }
     }
 

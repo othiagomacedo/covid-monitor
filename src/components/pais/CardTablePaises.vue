@@ -1,24 +1,26 @@
 <template>
     <h4>Histórico</h4>
     <div class="card" style="width: auto">
-        <table class="table table-striped-columns">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">Sigla</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Opções</th>
+                    <th scope="col">País</th>
+                    <th scope="col">Data Inicial</th>
+                    <th scope="col">Data Final</th>
+                    <th scope="col">Confirmados</th>
+                    <th scope="col">Mortes</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr v-for="(item, index) in listar" :key="index">
-                    <th scope="row">{{ index + 1 }}</th>
-                    <td>{{ item.sigla }}</td>
-                    <td>{{ item.nome }}</td>
-                    <td>{{ item.data }}</td>
-                    <td></td>
+                <tr v-for="(item, index) in historico" :key="index">
+                    <th scope="row">{{ item.id }}</th>
+                    <td>{{ item.paisSigla }}</td>
+                    <td>{{ item.dataInicial }}</td>
+                    <td>{{ item.dataFinal }}</td>
+                    <td>{{ item.confirmados }}</td>
+                    <td>{{ item.mortes }}</td>
                 </tr>
             </tbody>
 
@@ -41,7 +43,7 @@ export default {
             api.get('/dados/all')
                 .then(response => {
                     console.log(response.data);
-                    historico.value = response.data.results;
+                    historico.value = response.data;
                 })
                 .catch(error => {
                     console.error(error);

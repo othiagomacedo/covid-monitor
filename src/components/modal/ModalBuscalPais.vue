@@ -1,7 +1,7 @@
 <template>
     <div class="modal-busca">
-        <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalBuscaPais"
-            data-bs-whatever="@mdo">
+        <a type="button" class="btn" data-bs-toggle="modal" data-bs-target="#modalBuscaPais"
+            data-bs-whatever="">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                 viewBox="0 0 16 16">
                 <path
@@ -54,14 +54,11 @@
 const modalBuscaPais = document.getElementById('modalBuscaPais')
 if (modalBuscaPais) {
     modalBuscaPais.addEventListener('show.bs.modal', event => {
-        // Button that triggered the modal
+        
         const button = event.relatedTarget
-        // Extract info from data-bs-* attributes
+        
         const recipient = button.getAttribute('data-bs-whatever')
-        // If necessary, you could initiate an Ajax request here
-        // and then do the updating in a callback.
-
-        // Update the modal's content.
+        
         const modalTitle = modalBuscaPais.querySelector('.modal-title')
         const modalBodyInput = modalBuscaPais.querySelector('.modal-body input')
 
