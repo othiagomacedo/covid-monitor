@@ -1,10 +1,53 @@
 <template>
     <div class="res-bench">
-        <div class="row">
+        <div class="row" id="totalDados">
             <h4 class="titulo-res-bench">Resultados Comparativos</h4>
+
+            <h5 class="titulo-res-bench">Totais</h5>
+
+            <p>Total dos dados dos dois países acima</p>
+            <div class="col">
+                <card class="card1">
+                    <div class="card" style="width: auto">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4 class="titulo-card">Confirmados</h4>
+                            </li>
+                            <li class="list-group-item">{{ totConfirmados }}</li>
+                        </ul>
+                    </div>
+                </card>
+            </div>
+            <div class="col">
+                <card class="card2">
+                    <div class="card" style="width: auto">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4 class="titulo-card">Mortes</h4>
+                            </li>
+                            <li class="list-group-item">{{ totMortes }}</li>
+                        </ul>
+                    </div>
+                </card>
+            </div>
+            <div class="col">
+                <card class="card3">
+                    <div class="card" style="width: auto;">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4 class="titulo-card">Recuperados</h4>
+                            </li>
+                            <li class="list-group-item">{{ totRecuperados }}</li>
+                        </ul>
+                    </div>
+                </card>
+            </div>
+        </div>
+
+        <div class="row" id="difDados">
             <h5 class="titulo-res-bench">Diferenças</h5>
 
-            <p>Um resumo dos dados acima</p>
+            <p>Diferença dos dados entre os dois países</p>
             <div class="col">
                 <card class="card1">
                     <div class="card" style="width: auto">
@@ -48,13 +91,9 @@
 <script>
 
 export default {
-    data() {
-        return {
-            difConfirmados: 0,
-            difMortes: 0,
-            difRecuperados: 0
-        }
-    }
+
+    props: ['difConfirmados', 'difMortes', 'difRecuperados', 'totConfirmados', 'totMortes', 'totRecuperados'],
+
 }
 
 </script>
@@ -66,8 +105,16 @@ export default {
     text-align: center;
 }
 
+#totalDados {
+    margin-top: 2vh;
+}
+
+#difDados {
+    margin-top: 2vw;
+    margin-bottom: 2vh;
+}
+
 card {
     background-color: rgb(18, 190, 190);
 }
-
 </style>

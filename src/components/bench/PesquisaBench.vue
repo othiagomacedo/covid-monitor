@@ -49,24 +49,27 @@
             <div class="cards_comparativos">
                 <div class="row">
                     <div class="col">
-                        <CardPais 
-                            :nomePais = "nomePaisUm"
-                            :sigla = "siglaUm"
-                            :confirmados = "confirmadosUm"
-                            :mortes = "mortesUm"
-                            :recuperados = "recuperadosUm"
-                        ></CardPais>
+                        <CardPais :nomePais="nomePaisUm" :sigla="siglaUm" :confirmados="confirmadosUm" :mortes="mortesUm"
+                            :recuperados="recuperadosUm"></CardPais>
                     </div>
                     <div class="col">
-                        <CardPais 
-                            :nomePais = "nomePaisDois"
-                            :sigla = "siglaDois"
-                            :confirmados = "confirmadosDois"
-                            :mortes = "mortesDois"
-                            :recuperados = "recuperadosDois"
-                        ></CardPais>
+                        <CardPais :nomePais="nomePaisDois" :sigla="siglaDois" :confirmados="confirmadosDois"
+                            :mortes="mortesDois" :recuperados="recuperadosDois"></CardPais>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <ResultadosBench
+                    :totConfirmados = "totConfirmados"
+                    :totMortes = "totMortes"
+                    :totRecuperados = "totRecuperados"
+                    :difConfirmados = "difConfirmados"
+                    :difMortes = "difMortes"
+                    :difRecuperados = "difRecuperados"
+                ></ResultadosBench>
             </div>
         </div>
 
@@ -83,11 +86,13 @@ import api from '../../api/request/requests';
 import { ref } from 'vue';
 import Datepicker from 'vue3-datepicker';
 import CardPais from '../pais/CardPais.vue';
+import ResultadosBench from './ResultadosBench.vue';
 
 export default {
     components: {
-        Datepicker,        
-        CardPais
+        Datepicker,
+        CardPais,
+        ResultadosBench
     },
 
     data() {
@@ -108,7 +113,15 @@ export default {
             siglaDois: '',
             confirmadosDois: null,
             mortesDois: null,
-            recuperadosDois: null
+            recuperadosDois: null,
+
+            totConfirmados: 0,
+            totMortes: 0,
+            totRecuperados: 0,
+
+            difConfirmados: 0,
+            difMortes: 0,
+            difRecuperados: 0
         }
     },
 
@@ -145,7 +158,26 @@ export default {
             api.get(`/bench/get/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${dataIni}&${dataFim}/${this.nomeBench}`)
                 .then((response) => {
                     console.log(response.data);
-                    
+
+                    this.nomePaisUm = response.data.dadosPais1.nomePais;
+                    this.siglaUm = response.data.dadosPais1.sigla;
+                    this.confirmadosUm = response.data.dadosPais1.confirmados;
+                    this.mortesUm = response.data.dadosPais1.mortes;
+                    this.recuperadosUm = response.data.dadosPais1.recuperados;
+
+                    this.nomePaisDois = response.data.dadosPais2.nomePais;
+                    this.siglaDois = response.data.dadosPais2.sigla;
+                    this.confirmadosDois = response.data.dadosPais2.confirmados;
+                    this.mortesDois = response.data.dadosPais2.mortes;
+                    this.recuperadosDois = response.data.dadosPais2.recuperados;
+
+                    this.totConfirmados = response.data.confirmadosTotal;
+                    this.totMortes = response.data.mortesTotal;
+                    this.totRecuperados = response.data.recuperadosTotal;
+
+                    this.difConfirmados = response.data.confirmadosDiferenca;
+                    this.difMortes = response.data.mortesDiferenca;
+                    this.difRecuperados = response.data.recuperadosDiferenca;
                 })
                 .catch((error) => {
                     console.log(error);
