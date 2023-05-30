@@ -102,6 +102,7 @@ export default {
             dataInicial: '',
             dataFinal: '',
             format: 'dd-MM-yyyy',
+            historico: [],
         }
     },
 
@@ -126,9 +127,9 @@ export default {
         onMounted(listar);
 
         return {
-            historico,
             dataInicial,
             dataFinal,
+            historico,
         };
     },
 
@@ -160,6 +161,7 @@ export default {
                     this.dataFim = dataFim;
 
                     console.log(response.data);
+                    this.listarTodos();
                 })
                 .catch(error => {
                     console.error(error);
@@ -169,16 +171,16 @@ export default {
             // this.listarTodos();
 
             // Obter o nome do país
-            api.get(`/pais/sigla=${this.siglaPais}`)
-                .then(resp => {
-                    console.log(`/pais/sigla=${this.siglaPais} obteve ${resp.data.nome}`);
-                    this.nomePais = resp.data.nome;
-                }).catch(error => {
-                    console.error(error);
-                })
+                // api.get(`/pais/sigla=${this.siglaPais}`)
+                //     .then(resp => {
+                //         console.log(`/pais/sigla=${this.siglaPais} obteve ${resp.data.nome}`);
+                //         this.nomePais = resp.data.nome;
+                //     }).catch(error => {
+                //         console.error(error);
+                //     });
         },
         listarTodos() {
-            console.log('Listar gerado em ListarTodos');
+            console.log('LAtualizar lista');
             api.get('/dados/all')
                 .then(response => {
                     console.log(response.data);
