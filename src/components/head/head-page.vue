@@ -1,5 +1,6 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="barra-topo">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand">Covid Monitor</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -17,19 +18,21 @@
             </div>
         </div>
     </nav>
+    </div>
 </template>      
 
 <style>
 nav {
-    background-color: #f5f5f5;
+    background-color: #fafafa;
     box-shadow: 0 2px 4px rgba(54, 54, 54, 0.199);
 }
 
-li {
+
+.nav-item {
     margin: auto;
 }
 
-li:hover {
+.nav-item:hover {
     background-color: var(--color-background-nav-hover);
 }
 </style>

@@ -52,11 +52,14 @@
 import api from '../../api/request/requests';
 import { ref } from 'vue';
 import Datepicker from 'vue3-datepicker';
+import BenchmarkCardsPaisesComparativos from './BenchmarkCardsPaisesComparativos.vue';
 
 export default {
     components: {
-        Datepicker
+        Datepicker,
+        BenchmarkCardsPaisesComparativos
     },
+
     data() {
         return {
             nomeBench: '',
@@ -106,6 +109,8 @@ export default {
             api.get(`/bench/get/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${dataIni}&${dataFim}/${this.nomeBench}`)
                 .then((response) => {
                     console.log(response.data);
+
+                    this.$emit('dados-bench-atualizados', response.data);
                 })
                 .catch((error) => {
                     console.log(error);

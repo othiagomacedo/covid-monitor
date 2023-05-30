@@ -6,10 +6,7 @@
 
         <div class="row">
             <div class="col">
-                <CardPais></CardPais>
-            </div>
-            <div class="col">
-                <CardPais></CardPais>
+                <BenchmarkCardsPaisesComparativos></BenchmarkCardsPaisesComparativos>
             </div>
         </div>
 
@@ -29,17 +26,17 @@
 </template>
 
 <script>
-import CardPais from '../pais/CardPais.vue'
-import PesquisaBench from '../bench/PesquisaBench.vue';
-import ResultadosBench from '../bench/ResultadosBench.vue';
-import HistoricoBench from '../bench/HistoricoBenchmark.vue';
+import BenchmarkCardsPaisesComparativos from './BenchmarkCardsPaisesComparativos.vue';
+import PesquisaBench from './PesquisaBench.vue';
+import ResultadosBench from './ResultadosBench.vue';
+import HistoricoBench from './HistoricoBenchmark.vue';
 
 export default {
     components : {
         PesquisaBench,
-        CardPais,
         ResultadosBench,
-        HistoricoBench
+        HistoricoBench,
+        BenchmarkCardsPaisesComparativos
     }    
 }
 </script>

@@ -171,13 +171,13 @@ export default {
             // this.listarTodos();
 
             // Obter o nome do país
-                // api.get(`/pais/sigla=${this.siglaPais}`)
-                //     .then(resp => {
-                //         console.log(`/pais/sigla=${this.siglaPais} obteve ${resp.data.nome}`);
-                //         this.nomePais = resp.data.nome;
-                //     }).catch(error => {
-                //         console.error(error);
-                //     });
+                api.get(`/pais/sigla=${this.siglaPais}`)
+                    .then(resp => {
+                        console.log(`/pais/sigla=${this.siglaPais} obteve ${resp.data.nome}`);
+                        this.nomePais = resp.data.nome;
+                    }).catch(error => {
+                        console.error(error);
+                    });
         },
         listarTodos() {
             console.log('LAtualizar lista');

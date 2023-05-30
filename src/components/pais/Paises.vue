@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import BodyPais from '../pais/BodyPais.vue'
+import BodyPais from './BodyPais.vue'
 
 export default {
 

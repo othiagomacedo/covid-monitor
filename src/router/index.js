@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Benchmark from '../components/body/Benchmark.vue'
-import Paises from '../components/body/Paises.vue'
-import BodyPais from '../components/pais/BodyPais.vue'
+import Benchmark from '../components/bench/Benchmark.vue'
+import Paises from '../components/pais/Paises.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,12 +14,6 @@ const router = createRouter({
       path: '/paises',
       name: 'Paises',
       component: Paises
-    },
-    {
-      path: '/body-pais',
-      name: 'BodyPais',
-      component: BodyPais,
-      props: true
     }
   ]
 })
