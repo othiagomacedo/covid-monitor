@@ -2,11 +2,11 @@
     <div class="card-body">
         <div class="card" style="width: auto">
             <div class="card-body">
-                <h4 class="card-title">{{ pais.nomePais }}</h4>
-                <p class="card-title">Sigla: {{ pais.sigla }}</p>
-                <p class="confirmados">Confirmados: {{ pais.confirmados }}</p>
-                <p class="mortes">Mortes: {{ pais.mortes }}</p>
-                <p class="recuperados">Recuperados: {{ pais.recuperados }}</p>
+                <h4 class="card-title">{{ nomePais }}</h4>
+                <p class="card-title">Sigla: {{ sigla }}</p>
+                <p class="confirmados">Confirmados: {{ confirmados }}</p>
+                <p class="mortes">Mortes: {{ mortes }}</p>
+                <p class="recuperados">Recuperados: {{ recuperados }}</p>
             </div>
 
         </div>
@@ -16,12 +16,11 @@
 <script>
 
 export default {
-    props: {
-        pais: {
-            type: Object,
-            required: true,
-        },
-    },
+    props: ['nomePais',
+            'sigla',
+            'confirmados',
+            'mortes',
+            'recuperados'],
 
 }
 </script>

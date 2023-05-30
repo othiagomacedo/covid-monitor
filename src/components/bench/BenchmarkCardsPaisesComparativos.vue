@@ -29,96 +29,27 @@ import { onMounted, onUnmounted, ref } from 'vue/dist/vue.runtime.esm-bundler.js
 
 
 export default {
-    // props: {
-    //     //Pais 1
-    //     nomePais1: String,
-    //     sigla1: String,
-    //     confirmados1: Number,
-    //     mortes1: Number,
-    //     recuperados1: Number,
+    props: ['nomePais1',
+            'sigla1',
+            'confirmados1',
+            'mortes1',
+            'recuperados1',
+            'nomePais2',
+            'sigla2',
+            'confirmados2',
+            'mortes2',
+            'recuperados2'],
 
-    //     //Pais 2
-    //     nomePais2: String,
-    //     sigla2: String,
-    //     confirmados2: Number,
-    //     mortes2: Number,
-    //     recuperados2: Number,
-    // },
+    components: { CardPais },
 
     setup() {
 
-        // const nomePais1 = ref(props.nomePais1);
-        // const sigla1 = ref(props.sigla1);
-        // const confirmados1 = ref(props.confirmados1);
-        // const mortes1 = ref(props.mortes1);
-        // const recuperados1 = ref(props.recuperados1);
-
-        // const nomePais2 = ref(props.nomePais2);
-        // const sigla2 = ref(props.sigla2);
-        // const confirmados2 = ref(props.confirmados2);
-        // const mortes2 = ref(props.mortes2);
-        // const recuperados2 = ref(props.recuperados2);
-
-        // const atualizarDadosBench = (data) => {
-        //     nomePais1.value = data.nomePais1;
-        //     sigla1.value = data.sigla1;
-        //     confirmados1.value = data.confirmados1;
-        //     mortes1.value = data.mortes1;
-        //     recuperados1.value = data.recuperados1;
-
-        //     nomePais2.value = data.nomePais2;
-        //     sigla2.value = data.sigla2;
-        //     confirmados2.value = data.confirmados2;
-        //     mortes2.value = data.mortes2;
-        //     recuperados2.value = data.recuperados2;
-        // };
-
-
-        // onMounted(() => {
-        //     document.addEventListener('dados-bench-atualizados', atualizarDadosBench);
-        // });
-
-        // onUnmounted(() => {
-        //     document.removeEventListener(
-        //         'dados-bench-atualizados',
-        //         atualizarDadosBench
-        //     );
-        // });
-
-        // return {
-        //     nomePais1,
-        //     sigla1,
-        //     confirmados1,
-        //     mortes1,
-        //     recuperados1,
-        //     nomePais2,
-        //     sigla2,
-        //     confirmados2,
-        //     mortes2,
-        //     recuperados2,
-        // };
-
-        //
-        const propriedade = defineProps({
-            nomePais1: String,
-            sigla1: String,
-            confirmados1: Number,
-            mortes1: Number,
-            recuperados1: Number,
-
-            //Pais 2
-            nomePais2: String,
-            sigla2: String,
-            confirmados2: Number,
-            mortes2: Number,
-            recuperados2: Number,
-        });
     },
 
-
-    components: {
-        CardPais
+    mounted() {
+        console.log(nomePais1)
     },
+
 
     methods: {
         atualizarDadosBench(data) {

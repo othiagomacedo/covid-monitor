@@ -6,12 +6,6 @@
 
         <div class="row">
             <div class="col">
-                <BenchmarkCardsPaisesComparativos></BenchmarkCardsPaisesComparativos>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
                 <ResultadosBench></ResultadosBench>
             </div>
         </div>

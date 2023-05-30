@@ -44,7 +44,37 @@
                 </a>
             </div>
         </div>
+
+        <div class="row">
+            <div class="cards_comparativos">
+                <div class="row">
+                    <div class="col">
+                        <CardPais 
+                            :nomePais = "nomePaisUm"
+                            :sigla = "siglaUm"
+                            :confirmados = "confirmadosUm"
+                            :mortes = "mortesUm"
+                            :recuperados = "recuperadosUm"
+                        ></CardPais>
+                    </div>
+                    <div class="col">
+                        <CardPais 
+                            :nomePais = "nomePaisDois"
+                            :sigla = "siglaDois"
+                            :confirmados = "confirmadosDois"
+                            :mortes = "mortesDois"
+                            :recuperados = "recuperadosDois"
+                        ></CardPais>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+    <!-- 
+    <BenchmarkCardsPaisesComparativos :nomePais1="nomePaisUm" :sigla1="siglaUm" :confirmados1="confirmadosUm"
+            :mortes1="mortesUm" :recuperados1="recuperadosUm" :nomePais2="nomePaisDois" :sigla2="siglaDois"
+            :confirmados2="confirmadosDois" :mortes2="mortesDois" :recuperados2="recuperadosDois" /> -->
 </template>
 
 <script>
@@ -52,12 +82,12 @@
 import api from '../../api/request/requests';
 import { ref } from 'vue';
 import Datepicker from 'vue3-datepicker';
-import BenchmarkCardsPaisesComparativos from './BenchmarkCardsPaisesComparativos.vue';
+import CardPais from '../pais/CardPais.vue';
 
 export default {
     components: {
-        Datepicker,
-        BenchmarkCardsPaisesComparativos
+        Datepicker,        
+        CardPais
     },
 
     data() {
@@ -67,6 +97,18 @@ export default {
             siglaSegundoPais: '',
             dataInicial: '',
             dataFinal: '',
+
+            nomePaisUm: '',
+            siglaUm: '',
+            confirmadosUm: null,
+            mortesUm: null,
+            recuperadosUm: null,
+
+            nomePaisDois: '',
+            siglaDois: '',
+            confirmadosDois: null,
+            mortesDois: null,
+            recuperadosDois: null
         }
     },
 
@@ -86,16 +128,10 @@ export default {
         handleInputSigla2() {
             this.siglaSegundoPais = this.siglaSegundoPais.replace(/[^A-Za-z]/g, '').toUpperCase();
         },
-        formatNomeBench(){
+        formatNomeBench() {
             this.nomeBench = this.nomeBench.replace(' ', '-').toUpperCase();
         },
         buscarBench() {
-
-            console.log('Sigla do Primeiro País:', this.siglaPrimeiroPais);
-            console.log('Sigla do Segundo País:', this.siglaSegundoPais);
-            console.log('Data Inicial:', this.dataInicial);
-            console.log('Data Final:', this.dataFinal);
-            console.log('Nome do Benchmark:', this.nomeBench);
 
             let dataIniDia = this.dataInicial.getDate().toString().length < 2 ? '0' + this.dataInicial.getDate() : this.dataInicial.getDate();
             let dataIniMes = (this.dataInicial.getMonth() + 1).toString().length < 2 ? '0' + (this.dataInicial.getMonth() + 1) : (this.dataInicial.getMonth() + 1);
@@ -105,12 +141,11 @@ export default {
             let dataFim = this.dataFinal.getFullYear() + '-' + dataFimMes + '-' + dataFimDia;
 
             console.log('Buscando Benchmark');
-            console.log(`/bench/get/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${dataIni}&${dataFim}/${this.nomeBench}`)
+            console.log(`Vou realizar a request /bench/get/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${dataIni}&${dataFim}/${this.nomeBench}`)
             api.get(`/bench/get/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${dataIni}&${dataFim}/${this.nomeBench}`)
                 .then((response) => {
                     console.log(response.data);
-
-                    this.$emit('dados-bench-atualizados', response.data);
+                    
                 })
                 .catch((error) => {
                     console.log(error);
