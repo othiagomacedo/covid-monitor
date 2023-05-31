@@ -11,6 +11,21 @@ Foi usado para desenvolvimento do front-end:
 - [Bootstrap](https://getbootstrap.com/)
 - [Axios](https://axios-http.com/ptbr/docs/intro)
 
+## E como usar localmente?
+
+Primeiramente instale o [Node.js v20.2.0](https://nodejs.org/en).
+
+Na pasta do projeto execute o comando
+
+```bash
+npm install
+```
+Para "subir" use o comando
+
+```bash
+npm run dev
+```
+
 ## Algumas telas...
 <img src="https://github.com/othiagomacedo/covid-monitor/blob/74a411774f46cc0be93be68e0b37f89f11b409be/archives/Benchmark.png">
 
@@ -18,4 +33,4 @@ Foi usado para desenvolvimento do front-end:
 
 ## E o Back-end, cadê?
 
-Visite ele aqui [clicando neste link](https://github.com/othiagomacedo/covid-app).
+Para acessar ele, visite o mesmo aqui [clicando neste link](https://github.com/othiagomacedo/covid-app).
