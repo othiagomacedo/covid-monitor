@@ -36,7 +36,7 @@
                     Buscar e Salvar
                 </a>
 
-                <a class="btn btn-warning" id="excluirBtn" role="button" @click="editarBench" >
+                <a class="btn btn-warning" id="excluirBtn" role="button" @click="editarBench">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
                         viewBox="0 0 16 16">
                         <path
@@ -151,7 +151,7 @@ export default {
     setup() {
         const dataInicial = ref(new Date('2022-01-02'));
         const dataFinal = ref(new Date('2023-01-01'));
-        
+
         return {
             dataInicial,
             dataFinal,
@@ -169,6 +169,7 @@ export default {
             this.nomeBench = this.nomeBench.replace(' ', '-');
         },
         buscarBench() {
+
 
             this.$refs.modalAlerta.abrirModal('Buscando...', `Aguarde a busca finalizar`);
 
@@ -189,12 +190,14 @@ export default {
                     this.confirmadosUm = response.data.dadosPais1.confirmados;
                     this.mortesUm = response.data.dadosPais1.mortes;
                     this.recuperadosUm = response.data.dadosPais1.recuperados;
+                    this.siglaPrimeiroPais = this.siglaUm;
 
                     this.nomePaisDois = response.data.dadosPais2.nomePais;
                     this.siglaDois = response.data.dadosPais2.sigla;
                     this.confirmadosDois = response.data.dadosPais2.confirmados;
                     this.mortesDois = response.data.dadosPais2.mortes;
                     this.recuperadosDois = response.data.dadosPais2.recuperados;
+                    this.siglaSegundoPais = this.siglaDois;
 
                     this.totConfirmados = response.data.confirmadosTotal;
                     this.totMortes = response.data.mortesTotal;
@@ -208,10 +211,11 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
-                    this.$refs.modalAlerta.abrirModal('Ops...', `${error.response.data}`);
+                    this.$refs.modalAlerta.abrirModal('Ops...', `Ocorreu um erro.\n ${error}`);
                 });
 
             this.displayCarregar = false;
+
         },
 
         excluirBench() {
@@ -232,36 +236,40 @@ export default {
         editarBench() {
             this.configurarData();
 
+            this.$refs.modalAlerta.abrirModal('Editando', `Aguarde a edição finalizar`);
+
             console.log('Vou editar a Benchmark');
             console.log(`Vou realizar a request /bench/${this.id}/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${this.dataIni}&${this.dataFim}/${this.nomeBench}`)
             try {
                 api.post(`/bench/edit/${this.id}/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${this.dataIni}&${this.dataFim}/${this.nomeBench}`)
-                .then((response) => {
-                    console.log(response.data);
+                    .then((response) => {
+                        this.$refs.modalAlerta.fecharModal();
+                        console.log(response.data);
 
-                    let mensagemResp = '';
-                    if (response.data.foiEditado == true){
-                        mensagemResp = 'Benchmark editado com sucesso!';
-                    } else {
-                        mensagemResp = response.data.mensagem;
-                    }
-                    this.$refs.modalAlerta.abrirModal('Sucesso', `${mensagemResp}`);
-                })
-                .catch((error) => {
-                    console.log(error);
-                    this.$refs.modalAlerta.abrirModal('Ops...', `Ocorreu um erro ao tentar editar.\n${error}`);
-                });
+                        let mensagemResp = '';
+                        if (response.data.foiEditado == true) {
+                            mensagemResp = 'Benchmark editado com sucesso!';
+                        } else {
+                            mensagemResp = response.data.mensagem;
+                        }
+                        this.$refs.modalAlerta.abrirModal('Sucesso', `${mensagemResp}`);
+                        this.buscarBench();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$refs.modalAlerta.abrirModal('Ops...', `Ocorreu um erro ao tentar editar.\n${error}`);
+                    });
             } catch (error) {
-                if (error.code == "ERR_NETWORK"){
+                if (error.code == "ERR_NETWORK") {
                     this.$refs.modalAlerta.abrirModal('Ops...', `Falta preencher algum campo... Verifique por favor`);
                 } else {
                     this.$refs.modalAlerta.abrirModal('Ops...', `Ocorreu um erro ao tentar editar.\n${error}`);
                 }
-                
+
             }
         },
 
-        configurarData(){
+        configurarData() {
             let dataIniDia = this.dataInicial.getDate().toString().length < 2 ? '0' + this.dataInicial.getDate() : this.dataInicial.getDate();
             let dataIniMes = (this.dataInicial.getMonth() + 1).toString().length < 2 ? '0' + (this.dataInicial.getMonth() + 1) : (this.dataInicial.getMonth() + 1);
             let dataFimDia = this.dataFinal.getDate().toString().length < 2 ? '0' + this.dataFinal.getDate() : this.dataFinal.getDate();
