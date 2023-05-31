@@ -6,6 +6,7 @@ Olá, esse aqui é o front-end do projeto Covid Application
 
 Foi usado para desenvolvimento do front-end:
 - [Vue.js](https://vuejs.org/), usando bastante Javascript e uma levíssima pitada de Typescript
+- [Node.js v20.2.0](https://nodejs.org/en)
 - [Vite](https://vitejs.dev/)
 - [Bootstrap](https://getbootstrap.com/)
 - [Axios](https://axios-http.com/ptbr/docs/intro)
