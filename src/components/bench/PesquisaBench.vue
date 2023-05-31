@@ -91,12 +91,14 @@ import { ref } from 'vue';
 import Datepicker from 'vue3-datepicker';
 import CardPais from '../pais/CardPais.vue';
 import ResultadosBench from './ResultadosBench.vue';
+import ModalAlerta from '../modal/ModalAlerta.vue';
 
 export default {
     components: {
         Datepicker,
         CardPais,
-        ResultadosBench
+        ResultadosBench,
+        ModalAlerta
     },
 
     data() {

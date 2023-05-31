@@ -1,5 +1,6 @@
 <template>
     <div class="hist_bench">
+        <ModalAlerta ref="modalAlerta"/>
         <div class="row">
             <div class="col"></div>
             <div class="col">
@@ -66,18 +67,25 @@
                 </table>
             </div>
         </div>
+        
     </div>
 </template>
 
 <script>
 import api from '../../api/request/requests';
+import ModalAlerta from '../modal/ModalAlerta.vue';
 
 export default {
+
+    components: {
+        ModalAlerta
+    },
 
     props: ['atualizar'],
 
     data() {
         return {
+            mostrarModal: false,
             historico: [],
             idBench: 0,
         }
@@ -91,19 +99,26 @@ export default {
             api.get('/bench/get/all')
                 .then(response => {
                     console.log(response.data);
+                    if(response.data.length == 0){
+                        this.$refs.modalAlerta.abrirModal('Ops...', `Lista de Benchmarks está vazia!\nPor favor busque por um Benchmark`);
+                    }
                     this.historico = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
+                    console.error(error);
+                    this.$refs.modalAlerta.abrirModal('Ops...', `Não obtive uma lista de Benchmarks.\n${error}`);
                 })
         },
         deletarBench() {
             api.delete(`/bench/del/id=${this.idBench}`)
                 .then(response => {
                     console.log(response);
-                    // this.getHistorico();
+                    this.getHistorico();
+                    this.$refs.modalAlerta.abrirModal('Sucesso', `${response.data}`);
+                    // this.$root.$emit('open-modal');
                 })
                 .catch(error => {
+                    this.$refs.modalAlerta.abrirModal('Erro', `Ocorreu um erro ao tentar excluir benchmark de id ${this.idBench} \n${error}`);
                     console.log(error);
                 })
         },

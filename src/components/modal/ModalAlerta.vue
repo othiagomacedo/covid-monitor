@@ -1,46 +1,74 @@
 <template>
-    <modal>
-        <div class="modal fade" id="ModalAlerta" tabindex="-1" aria-labelledby="ModalAlertaLabel" aria-hidden="true">
+    <div>
+        <div class="modal fade show" id="ModalAlerta" tabindex="-1" aria-labelledby="ModalAlertaLabel" aria-hidden="true"
+            v-if="visibilidade" style="display: block;" aria-modal="true" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="ModalAlertaLabel">{{titulo}}</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h2 class="modal-title fs-5" id="ModalAlertaLabel">{{ titulo }}</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            @click="fecharModal"></button>
                     </div>
                     <div class="modal-body">
                         {{ mensagem }}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Ok</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"
+                            @click="fecharModal">Ok</button>
                     </div>
                 </div>
             </div>
         </div>
-
-    </modal>
+        <div class="modal-overlay" v-if="visibilidade"></div>
+    </div>
 </template>
   
 <script>
 export default {
-    props: {
-        mensagem: {
-            type: String,
-            required: true
-        },
-        titulo: {
-            type: String,
-            required: true
+
+    data() {
+        return {
+            mensagem: '',
+            titulo: '',
+            visibilidade: false,
+            display: 'block'
         }
-    }
+    },
+
+
+    methods: {
+
+        abrirModal(tit, mens) {
+            this.mensagem = mens;
+            this.titulo = tit;
+            this.visibilidade = true;
+            console.log(`visibilidade do modal é ${this.visibilidade} e exibirei a mensagem "${mens}" `)
+        },
+
+        fecharModal() {
+            this.visibilidade = false;
+            this.display = 'none';
+        }
+    },
+
 };
 </script>
 
 <style>
-#ModalAlerta{
+#ModalAlerta {
     background-color: transparent;
 }
 
-.modal-content{
+.modal-content {
     background-color: var(--color-background);
 }
-</style>
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Cor de fundo preto fosco com transparência */
+}</style>
