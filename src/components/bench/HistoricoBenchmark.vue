@@ -43,17 +43,23 @@
                             <th scope="col">Recuperados</th>
                             <th scope="col">Data Inicial</th>
                             <th scope="col">Data Final</th>
+                            <th scope="col">Data Benchmark</th>
+                            <th scope="col">Benchmark</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr v-for="(item, index) in historico" :key="index">
                             <th scope="row">{{ item.id }}</th>
-                            <td>{{ item.paisSigla }}</td>
-                            <td>{{ item.dataInicial }}</td>
+                            <td>{{ item.historicoPais1.paisSigla }}</td>
+                            <td>{{ item.historicoPais2.paisSigla }}</td>
+                            <td>{{ item.historicoPais1.confirmados + item.historicoPais2.confirmados  }}</td>
+                            <td>{{ item.historicoPais1.mortes + item.historicoPais2.mortes  }}</td>
+                            <td>{{ item.historicoPais1.recuperados + item.historicoPais2.recuperados  }}</td>
+                            <td>{{ item.dataIncial }}</td>
                             <td>{{ item.dataFinal }}</td>
-                            <td>{{ item.confirmados }}</td>
-                            <td>{{ item.mortes }}</td>
+                            <td>{{ item.dataHistorico }}</td>
+                            <td>{{ item.nomeHistorico }}</td>
                         </tr>
                     </tbody>
 

@@ -11,14 +11,12 @@
 import './scss/style-geral.css'
 import ModelAlerta from './components/modal/ModalAlerta.vue'
 import HeadPage from './components/head/head-page.vue'
-import FooterPage from './components/footer/footer-page.vue'
 import BodyPage from './components/body/body-page.vue'
 export default {
   components: {
     HeadPage,
     BodyPage,
-    ModelAlerta,
-    FooterPage
+    ModelAlerta
   }
 };
 </script>
