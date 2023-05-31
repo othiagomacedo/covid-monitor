@@ -8,11 +8,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <router-link to="/paises" class="nav-link active" aria-current="page">Países</router-link>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <router-link to="/benchmark" class="nav-link active" aria-current="page">Benchmark</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/historico" class="nav-link active" aria-current="page">Histórico</router-link>
                     </li>
                 </ul>
             </div>

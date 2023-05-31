@@ -31,7 +31,6 @@ export default {
             mensagem: '',
             titulo: '',
             visibilidade: false,
-            display: 'block'
         }
     },
 
@@ -47,7 +46,6 @@ export default {
 
         fecharModal() {
             this.visibilidade = false;
-            this.display = 'none';
         }
     },
 
@@ -57,6 +55,8 @@ export default {
 <style>
 #ModalAlerta {
     background-color: transparent;
+    transition: opacity 0.5s;
+    z-index: 9999;
 }
 
 .modal-content {
@@ -69,6 +69,6 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    /* Cor de fundo preto fosco com transparência */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
 }</style>

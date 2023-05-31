@@ -1,5 +1,6 @@
 <template>
     <div class="src_bench">
+        <ModalAlerta ref="modalAlerta" />
         <div class="row">
             <div class="col">
                 <input type="text" class="form-control" placeholder="Sigla do Primeiro País" aria-label="Primeiro País"
@@ -10,7 +11,7 @@
                     v-model="siglaSegundoPais" @input="handleInputSigla2" maxlength="3">
             </div>
             <div class="col-6">
-                <div class="input-group">
+                <div class="input-group" id="grupo-Data-Selecionar">
                     <Datepicker v-model="dataInicial" class="form-control" placeholder="Data Inicial" format="dd-MM-yyyy"
                         @input="updateDataInicial" :format="format"></Datepicker>
 
@@ -24,7 +25,8 @@
                 <input type="text" class="form-control" placeholder="Nome do Benchmark" aria-label="Nome Bench"
                     v-model="nomeBench" @input="formatNomeBench()">
             </div>
-            <div class="col">
+            <div class="col" id="pesqBenchBotoes">
+
                 <a class="btn btn-primary" role="button" @click="buscarBench">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                         viewBox="0 0 16 16">
@@ -34,7 +36,7 @@
                     Buscar e Salvar
                 </a>
 
-                <a class="btn btn-warning" id="excluirBtn" role="button" @click="excluirBench">
+                <a class="btn btn-warning" id="excluirBtn" role="button" @click="editarBench" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
                         viewBox="0 0 16 16">
                         <path
@@ -51,11 +53,24 @@
                     </svg>
                     Excluir
                 </a>
+
             </div>
         </div>
 
         <div class="row">
             <div class="cards_comparativos">
+                <div class="row">
+                    <div class="col">
+                        <div class="idExibir">
+                            <h4>Id: {{ id }}</h4>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="spinner-border text-primary" role="status" v-if="displayCarregar">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col">
                         <CardPais :nomePais="nomePaisUm" :sigla="siglaUm" :confirmados="confirmadosUm" :mortes="mortesUm"
@@ -78,10 +93,6 @@
         </div>
 
     </div>
-    <!-- 
-    <BenchmarkCardsPaisesComparativos :nomePais1="nomePaisUm" :sigla1="siglaUm" :confirmados1="confirmadosUm"
-            :mortes1="mortesUm" :recuperados1="recuperadosUm" :nomePais2="nomePaisDois" :sigla2="siglaDois"
-            :confirmados2="confirmadosDois" :mortes2="mortesDois" :recuperados2="recuperadosDois" /> -->
 </template>
 
 <script>
@@ -103,6 +114,7 @@ export default {
 
     data() {
         return {
+            id: 0,
             nomeBench: '',
             siglaPrimeiroPais: '',
             siglaSegundoPais: '',
@@ -127,13 +139,19 @@ export default {
 
             difConfirmados: 0,
             difMortes: 0,
-            difRecuperados: 0
+            difRecuperados: 0,
+
+            displayCarregar: false,
+
+            dataIni: '',
+            dataFim: '',
         }
     },
 
     setup() {
         const dataInicial = ref(new Date('2022-01-02'));
         const dataFinal = ref(new Date('2023-01-01'));
+        
         return {
             dataInicial,
             dataFinal,
@@ -148,23 +166,24 @@ export default {
             this.siglaSegundoPais = this.siglaSegundoPais.replace(/[^A-Za-z]/g, '').toUpperCase();
         },
         formatNomeBench() {
-            this.nomeBench = this.nomeBench.replace(' ', '-').toUpperCase();
+            this.nomeBench = this.nomeBench.replace(' ', '-');
         },
         buscarBench() {
 
-            let dataIniDia = this.dataInicial.getDate().toString().length < 2 ? '0' + this.dataInicial.getDate() : this.dataInicial.getDate();
-            let dataIniMes = (this.dataInicial.getMonth() + 1).toString().length < 2 ? '0' + (this.dataInicial.getMonth() + 1) : (this.dataInicial.getMonth() + 1);
-            let dataFimDia = this.dataFinal.getDate().toString().length < 2 ? '0' + this.dataFinal.getDate() : this.dataFinal.getDate();
-            let dataFimMes = (this.dataFinal.getMonth() + 1).toString().length < 2 ? '0' + (this.dataFinal.getMonth() + 1) : (this.dataFinal.getMonth() + 1);
-            let dataIni = this.dataInicial.getFullYear() + '-' + dataIniMes + '-' + dataIniDia;
-            let dataFim = this.dataFinal.getFullYear() + '-' + dataFimMes + '-' + dataFimDia;
+            this.$refs.modalAlerta.abrirModal('Buscando...', `Aguarde a busca finalizar`);
+
+            this.displayCarregar = true;
+
+            this.configurarData();
 
             console.log('Buscando Benchmark');
-            console.log(`Vou realizar a request /bench/get/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${dataIni}&${dataFim}/${this.nomeBench}`)
-            api.get(`/bench/get/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${dataIni}&${dataFim}/${this.nomeBench}`)
+            console.log(`Vou realizar a request /bench/get/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${this.dataIni}&${this.dataFim}/${this.nomeBench}`)
+            api.get(`/bench/get/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${this.dataIni}&${this.dataFim}/${this.nomeBench}`)
                 .then((response) => {
+                    this.$refs.modalAlerta.fecharModal();
                     console.log(response.data);
 
+                    this.id = response.data.id;
                     this.nomePaisUm = response.data.dadosPais1.nomePais;
                     this.siglaUm = response.data.dadosPais1.sigla;
                     this.confirmadosUm = response.data.dadosPais1.confirmados;
@@ -184,10 +203,15 @@ export default {
                     this.difConfirmados = response.data.confirmadosDiferenca;
                     this.difMortes = response.data.mortesDiferenca;
                     this.difRecuperados = response.data.recuperadosDiferenca;
+
+                    this.$refs.modalAlerta.abrirModal('Sucesso', `Benchmark de ID ${response.data.id} foi gerado/buscado`);
                 })
                 .catch((error) => {
                     console.log(error);
+                    this.$refs.modalAlerta.abrirModal('Ops...', `${error.response.data}`);
                 });
+
+            this.displayCarregar = false;
         },
 
         excluirBench() {
@@ -197,15 +221,54 @@ export default {
             api.delete(`/bench/del/nome=${this.nomeBench}`)
                 .then((response) => {
                     console.log(response.data);
+                    this.$refs.modalAlerta.abrirModal('Sucesso', `${response.data}`);
                 })
                 .catch((error) => {
                     console.log(error);
+                    this.$refs.modalAlerta.abrirModal('Ops...', `Ocorreu um erro ao tentar excluir.\n${error.response.data}`);
                 });
         },
 
-        editarBench(){
+        editarBench() {
+            this.configurarData();
+
             console.log('Vou editar a Benchmark');
-        }
+            console.log(`Vou realizar a request /bench/${this.id}/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${this.dataIni}&${this.dataFim}/${this.nomeBench}`)
+            try {
+                api.post(`/bench/edit/${this.id}/${this.siglaPrimeiroPais}&${this.siglaSegundoPais}/${this.dataIni}&${this.dataFim}/${this.nomeBench}`)
+                .then((response) => {
+                    console.log(response.data);
+
+                    let mensagemResp = '';
+                    if (response.data.foiEditado == true){
+                        mensagemResp = 'Benchmark editado com sucesso!';
+                    } else {
+                        mensagemResp = response.data.mensagem;
+                    }
+                    this.$refs.modalAlerta.abrirModal('Sucesso', `${mensagemResp}`);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$refs.modalAlerta.abrirModal('Ops...', `Ocorreu um erro ao tentar editar.\n${error}`);
+                });
+            } catch (error) {
+                if (error.code == "ERR_NETWORK"){
+                    this.$refs.modalAlerta.abrirModal('Ops...', `Falta preencher algum campo... Verifique por favor`);
+                } else {
+                    this.$refs.modalAlerta.abrirModal('Ops...', `Ocorreu um erro ao tentar editar.\n${error}`);
+                }
+                
+            }
+        },
+
+        configurarData(){
+            let dataIniDia = this.dataInicial.getDate().toString().length < 2 ? '0' + this.dataInicial.getDate() : this.dataInicial.getDate();
+            let dataIniMes = (this.dataInicial.getMonth() + 1).toString().length < 2 ? '0' + (this.dataInicial.getMonth() + 1) : (this.dataInicial.getMonth() + 1);
+            let dataFimDia = this.dataFinal.getDate().toString().length < 2 ? '0' + this.dataFinal.getDate() : this.dataFinal.getDate();
+            let dataFimMes = (this.dataFinal.getMonth() + 1).toString().length < 2 ? '0' + (this.dataFinal.getMonth() + 1) : (this.dataFinal.getMonth() + 1);
+            this.dataIni = this.dataInicial.getFullYear() + '-' + dataIniMes + '-' + dataIniDia;
+            this.dataFim = this.dataFinal.getFullYear() + '-' + dataFimMes + '-' + dataFimDia;
+        },
 
     }
 }
@@ -214,10 +277,24 @@ export default {
 
 <style>
 .row {
-    padding-bottom: 2vh;
+    padding-bottom: 3vh;
+}
+
+.idExibir {
+    color: var(--color-text-dark);
 }
 
 #excluirBtn {
     margin-left: 1vw;
+}
+
+#pesqBenchBotoes {
+    display: flex;
+}
+
+#grupo-Data-Selecionar {
+    display: flex;
+    align-items: left;
+    justify-content: space-between;
 }
 </style>

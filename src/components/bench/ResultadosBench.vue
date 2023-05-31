@@ -7,9 +7,9 @@
 
             <p>Total dos dados dos dois países acima</p>
             <div class="col">
-                <card class="card1">
+                <card class="card1-1">
                     <div class="card" style="width: auto">
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group list-group-flush" id="CardConfirmados">
                             <li class="list-group-item">
                                 <h4 class="titulo-card">Confirmados</h4>
                             </li>
@@ -19,7 +19,7 @@
                 </card>
             </div>
             <div class="col">
-                <card class="card2">
+                <card class="card1-2">
                     <div class="card" style="width: auto">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
@@ -31,7 +31,7 @@
                 </card>
             </div>
             <div class="col">
-                <card class="card3">
+                <card class="card1-3">
                     <div class="card" style="width: auto;">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
@@ -49,7 +49,7 @@
 
             <p>Diferença dos dados entre os dois países</p>
             <div class="col">
-                <card class="card1">
+                <card class="card2-1">
                     <div class="card" style="width: auto">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
@@ -61,7 +61,7 @@
                 </card>
             </div>
             <div class="col">
-                <card class="card2">
+                <card class="card2-2">
                     <div class="card" style="width: auto">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
@@ -73,7 +73,7 @@
                 </card>
             </div>
             <div class="col">
-                <card class="card3">
+                <card class="card2-3">
                     <div class="card" style="width: auto;">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
@@ -114,7 +114,4 @@ export default {
     margin-bottom: 2vh;
 }
 
-card {
-    background-color: rgb(18, 190, 190);
-}
 </style>

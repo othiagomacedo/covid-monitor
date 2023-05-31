@@ -2,11 +2,11 @@
     <div class="hist_bench">
         <ModalAlerta ref="modalAlerta"/>
         <div class="row">
-            <div class="col"></div>
             <div class="col">
-                <h4 class="title_hist">Outros BenchMarks</h4>
+                <h2 class="title_hist">Outros BenchMarks</h2>
             </div>
-            <div class="col">
+        </div>
+        <div class="row">
                 <div class="buttons_lista">
                     <a type="button" class="btn btn-success" @click="getHistorico">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -29,7 +29,6 @@
                         v-model="idBench"  >
                 </div>
             </div>
-        </div>
         <div class="row">
 
             <div class="col">
@@ -106,7 +105,7 @@ export default {
                 })
                 .catch(error => {
                     console.error(error);
-                    this.$refs.modalAlerta.abrirModal('Ops...', `Não obtive uma lista de Benchmarks.\n${error}`);
+                    this.$refs.modalAlerta.abrirModal('Ops...', `Não obtive uma lista de Benchmarks.\n${error.response.data}`);
                 })
         },
         deletarBench() {
@@ -118,10 +117,28 @@ export default {
                     // this.$root.$emit('open-modal');
                 })
                 .catch(error => {
-                    this.$refs.modalAlerta.abrirModal('Erro', `Ocorreu um erro ao tentar excluir benchmark de id ${this.idBench} \n${error}`);
+                    this.$refs.modalAlerta.abrirModal('Erro', `Ocorreu um erro ao tentar excluir benchmark de id ${this.idBench} \n${error.response.data}`);
+                    this.mensagemErros(error);
                     console.log(error);
                 })
         },
+
+        mensagemErros(error){
+            codigo = error.response.status;
+            mensagem = '';
+
+            if(codigo == 500){
+                mensagem = 'Erro interno do servidor';    
+            }
+            if (codigo == 400){
+                mensagem = `Erro ao tentar executar a ação.\n${error.response.data}`;
+            }
+            if (codigo == 204){
+                mensagem = 'Nenhum dado encontrado';
+            }
+            console.log('Ops...', `${mensagem}`);
+            this.$refs.modalAlerta.abrirModal('Ops...', `${mensagem}`);
+        }
     }
 }
 
